@@ -35,7 +35,7 @@ func (s *Sender) Send() {
 func sendMsg(msg SenderMsg) {
 	defer func() {
 		if r := recover(); r != nil {
-			fmt.Println("oh shit....sendMsg panic")
+			fmt.Println("oh shit....sendMsg panic...")
 		}
 	}()
 	way := msg.way
