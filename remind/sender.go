@@ -2,6 +2,7 @@ package remind
 
 import (
 	"fmt"
+	"tellMeWhen/common"
 	"tellMeWhen/model"
 )
 
@@ -30,6 +31,13 @@ func (s *Sender) Send() {
 	}
 }
 
+// 钉钉 https://oapi.dingtalk.com/robot/send?access_token=ec6c5321ae775c71d48c93a33796e3683f62b5282cddc01d96cd8b9e6e02ea21
 func sendMsg(msg SenderMsg) {
+	way := msg.way
+	name := way.Name
+	switch name {
+	case common.DingTalkText:
+
+	}
 	fmt.Println("start sendMsg,msg:", msg)
 }

@@ -2,6 +2,7 @@ package remind
 
 import (
 	"fmt"
+	"tellMeWhen/common"
 	"tellMeWhen/model"
 	"time"
 )
@@ -9,11 +10,14 @@ import (
 type ReminderInterface interface {
 	// 开始提醒
 	start(sendChan chan<- SenderMsg)
+	GetReminderType() string
 }
 
 type MsgFormatter interface {
 	FormatMsg(reminder *model.Reminder) string
 }
+
+var _ ReminderInterface = (*ReminderPer)(nil)
 
 // 固定间隔提醒器
 type ReminderPer struct {
@@ -58,4 +62,8 @@ func (rp *ReminderPer) start(sendChan chan<- SenderMsg) {
 			sendChan <- msg
 		}
 	}
+}
+
+func (rp *ReminderPer) GetReminderType() string {
+	return common.ReminderPer
 }

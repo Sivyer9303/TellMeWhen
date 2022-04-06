@@ -1,5 +1,6 @@
 package common
 
 const (
-	REMINDER_TYPE_PER = iota
+	ReminderPer  = "reminder_per"
+	DingTalkText = "ding_talk_text"
 )
