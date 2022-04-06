@@ -1,13 +1,14 @@
 package remind
 
 import (
+	"fmt"
 	"tellMeWhen/model"
 	"time"
 )
 
-type ReminderType interface {
+type ReminderInterface interface {
 	// 开始提醒
-	start()
+	start(sendChan chan<- SenderMsg)
 }
 
 type MsgFormatter interface {
@@ -16,21 +17,20 @@ type MsgFormatter interface {
 
 // 固定间隔提醒器
 type ReminderPer struct {
-	sendChan chan<- SenderMsg
 	reminder model.Reminder
 	duration time.Duration
 }
 
 // 创建一个固定间隔提醒器
-func NewReminderPer(reminder model.Reminder, ch chan<- SenderMsg) *ReminderPer {
+func NewReminderPer(reminder model.Reminder, duration time.Duration) *ReminderPer {
 	return &ReminderPer{
-		sendChan: ch,
 		reminder: reminder,
-		duration: time.Second,
+		duration: duration,
 	}
 }
 
-func (rp *ReminderPer) start() {
+func (rp *ReminderPer) start(sendChan chan<- SenderMsg) {
+	fmt.Println("start")
 	endTime := rp.reminder.CircleEndTime
 	startTime := rp.reminder.CircleStartTime
 	now := time.Now()
@@ -43,17 +43,19 @@ func (rp *ReminderPer) start() {
 	}
 	endChan := time.After(endTime.Sub(now))
 	tick := time.Tick(rp.duration)
+	fmt.Println("start for select")
 	for {
 		select {
 		case <-endChan:
 			return
 		case <-tick:
 			// 到了该触发的时候了，组装数据
+			fmt.Println("开始发送消息")
 			msg := SenderMsg{
 				id:  rp.reminder.ID,
 				way: rp.reminder.ReminderWay,
 			}
-			rp.sendChan <- msg
+			sendChan <- msg
 		}
 	}
 }
