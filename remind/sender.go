@@ -33,6 +33,11 @@ func (s *Sender) Send() {
 
 // 钉钉 https://oapi.dingtalk.com/robot/send?access_token=ec6c5321ae775c71d48c93a33796e3683f62b5282cddc01d96cd8b9e6e02ea21
 func sendMsg(msg SenderMsg) {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("oh shit....sendMsg panic")
+		}
+	}()
 	way := msg.way
 	name := way.Name
 	switch name {
