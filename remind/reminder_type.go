@@ -86,7 +86,19 @@ func NewReminderCron(reminder model.Reminder, cron string) *ReminderCron {
 
 func (rc *ReminderCron) start(sendChan chan<- SenderMsg) {
 	for {
+		fmt.Println("start cron")
 		now := time.Now()
+		endTime := rc.reminder.CircleEndTime
+		startTime := rc.reminder.CircleStartTime
+		fmt.Println(startTime.Format("2006-01-02 15:03:04"), "        ", endTime.Format("2006-01-02 15:03:04"))
+		if startTime.After(now) {
+			a := time.After(startTime.Sub(now))
+			<-a
+			continue
+		}
+		if endTime.Before(now) {
+			return
+		}
 		next := rc.expression.Next(now)
 		for next.Before(now) {
 			next = rc.expression.Next(next)
