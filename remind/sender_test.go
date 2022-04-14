@@ -45,7 +45,7 @@ func TestSender_Send_Reminder_Cron(t *testing.T) {
 		CircleStartTime: startTime,
 		CircleEndTime:   endTime,
 	}
-	per := NewReminderCron(reminder, "* * 10 * * * *")
+	per := NewReminderCron(reminder, "0/5 * * * * ? ")
 	sender.AddReminder(per)
 	time.Sleep(time.Second * 70)
 }
