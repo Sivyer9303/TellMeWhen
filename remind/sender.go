@@ -12,8 +12,9 @@ type Sender struct {
 }
 
 type SenderMsg struct {
-	id  uint
-	way model.ReminderWay
+	id     uint
+	way    model.ReminderWay
+	params map[string]interface{}
 }
 
 func (s *Sender) AddReminder(re ReminderInterface) {
@@ -31,7 +32,7 @@ func (s *Sender) Send() {
 	}
 }
 
-// 钉钉 https://oapi.dingtalk.com/robot/send?access_token=ec6c5321ae775c71d48c93a33796e3683f62b5282cddc01d96cd8b9e6e02ea21
+// 钉钉 https://oapi.dingtalk.com/robot/send?access_token=a3e76af9d2e3e79423822fa2c742b89405db57481123582105407000e63af7e6
 func sendMsg(msg SenderMsg) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -42,7 +43,11 @@ func sendMsg(msg SenderMsg) {
 	name := way.Name
 	switch name {
 	case common.DingTalkText:
+		fmt.Println("start dingtalk message")
 
+		break
+	default:
+		break
 	}
 	fmt.Println("start sendMsg,msg:", msg)
 }

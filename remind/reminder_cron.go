@@ -2,10 +2,11 @@ package remind
 
 import (
 	"fmt"
-	"github.com/gorhill/cronexpr"
 	"tellMeWhen/common"
 	"tellMeWhen/model"
 	"time"
+
+	"github.com/gorhill/cronexpr"
 )
 
 var _ ReminderInterface = (*ReminderCron)(nil)
@@ -30,12 +31,12 @@ func NewReminderCron(reminder model.Reminder, cron string) *ReminderCron {
 }
 
 func (rc *ReminderCron) start(sendChan chan<- SenderMsg) {
+	fmt.Println("start cron")
 	for {
-		fmt.Println("start cron")
 		now := time.Now()
 		endTime := rc.reminder.CircleEndTime
 		startTime := rc.reminder.CircleStartTime
-		fmt.Println(startTime.Format("2006-01-02 15:03:04"), "        ", endTime.Format("2006-01-02 15:03:04"))
+		fmt.Println("start to deal cron reminder ", startTime.Format("2006-01-02 15:04:05"), "        ", endTime.Format("2006-01-02 15:04:05"))
 		if startTime.After(now) {
 			a := time.After(startTime.Sub(now))
 			<-a
@@ -48,6 +49,7 @@ func (rc *ReminderCron) start(sendChan chan<- SenderMsg) {
 		for next.Before(now) {
 			next = rc.expression.Next(next)
 		}
+		fmt.Println("next send time : ", next.Format("2006-01-02 15:04:05"))
 		duration := next.Sub(now)
 		after := time.After(duration)
 		<-after
