@@ -1,8 +1,9 @@
 package model
 
 import (
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type Reminder struct {
@@ -23,8 +24,9 @@ func (Reminder) TableName() string {
 
 type ReminderType struct {
 	gorm.Model
-	Name string `gorm:"type_name",json:"name"`
-	Desc string `gorm:"type_desc",json:"desc"`
+	Name  string `gorm:"type_name",json:"name"`
+	Desc  string `gorm:"type_desc",json:"desc"`
+	Param string
 }
 
 func (ReminderType) TableName() string {

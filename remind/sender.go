@@ -11,6 +11,13 @@ type Sender struct {
 	reminders []ReminderInterface
 }
 
+func GetSender() *Sender {
+	return &Sender{
+		sendChan:  make(chan SenderMsg, 10),
+		reminders: make([]ReminderInterface, 0),
+	}
+}
+
 type SenderMsg struct {
 	id     uint
 	way    model.ReminderWay

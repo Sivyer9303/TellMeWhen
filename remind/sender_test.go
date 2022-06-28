@@ -50,13 +50,14 @@ func TestSender_Send_Reminder_Cron(t *testing.T) {
 		CircleStartTime: startTime,
 		CircleEndTime:   endTime,
 	}
-	per := NewReminderCron(reminder, "0 30 14 * * * ?")
+	per := NewReminderCron(reminder, "0 30 14 * * 2,3,4,5,6 ?")
 	sender.AddReminder(per)
 	time.Sleep(time.Second * 70)
 }
 
 func TestSign(t *testing.T) {
-	secret := "SECf896a430fa46b7fb4c8539255fa218283167dca01179b4be8079d07ada900bf7"
+	// https://oapi.dingtalk.com/robot/send?access_token=d9770adfe5f2e9a4fba80a989c71bee821703d83e80776854054ed91d4876e71
+	secret := "SEC8ecb6c95842ae90335557f4cb974a7fbc836617f4123b50b6be82c42afa8dff1"
 	// 1656406786128
 	// 1656406830
 	// 1656406849850203500
