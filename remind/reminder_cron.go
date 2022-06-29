@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"tellMeWhen/common"
 	"tellMeWhen/model"
+	"tellMeWhen/query"
 	"time"
 
 	"github.com/gorhill/cronexpr"
@@ -34,8 +35,9 @@ func (rc *ReminderCron) start(sendChan chan<- SenderMsg) {
 	fmt.Println("start cron")
 	for {
 		now := time.Now()
-		endTime := rc.reminder.CircleEndTime
-		startTime := rc.reminder.CircleStartTime
+		reminder := rc.reminder
+		endTime := reminder.CircleEndTime
+		startTime := reminder.CircleStartTime
 		fmt.Println("start to deal cron reminder ", startTime.Format("2006-01-02 15:04:05"), "        ", endTime.Format("2006-01-02 15:04:05"))
 		if startTime.After(now) {
 			a := time.After(startTime.Sub(now))
@@ -53,7 +55,8 @@ func (rc *ReminderCron) start(sendChan chan<- SenderMsg) {
 		duration := next.Sub(now)
 		after := time.After(duration)
 		<-after
-		msg := SenderMsg{way: rc.reminder.ReminderWay}
+		way := query.GetRemindQuery().GetReminderWayById(reminder.ReminderWayId)
+		msg := SenderMsg{way: *way}
 		sendChan <- msg
 	}
 }

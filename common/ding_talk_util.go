@@ -1,15 +1,10 @@
 package common
 
 import (
-	"context"
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
-	"net/url"
 	"time"
 )
 
@@ -33,41 +28,43 @@ func getSign() string {
 }
 
 func SendMessage(msg string) error {
-	var (
-		ctx    context.Context
-		cancel context.CancelFunc
-		uri    string
-		resp   *http.Response
-		err    error
-	)
-	ctx, cancel = context.WithTimeout(context.Background(), time.Second*2)
-	defer cancel()
-
-	value := url.Values{}
-	value.Set("access_token", token)
-	if secret != "" {
-		t := time.Now().UnixNano() / 1e6
-		value.Set("timestamp", fmt.Sprintf("%d", t))
-		value.Set("sign", getSign())
-
-	}
-	uri = path + value.Encode()
-	header := map[string]string{
-		"Content-type": "application/json",
-	}
-	marshal, err := json.Marshal(msg)
-	if err != nil {
-		fmt.Println("序列化数据失败")
-		return err
-	}
-	resp, err = doRequest(ctx, "POST", uri, header, marshal)
-
-	if err != nil {
-		return err
-	}
-	if resp.StatusCode != http.StatusOK {
-		body, _ := ioutil.ReadAll(resp.Body)
-		return fmt.Errorf("send msg err: %s, token: %s, msg: %s", string(body), token, marshal)
-	}
+	fmt.Println("开始假装发送消息:", msg)
 	return nil
+	//var (
+	//	ctx    context.Context
+	//	cancel context.CancelFunc
+	//	uri    string
+	//	resp   *http.Response
+	//	err    error
+	//)
+	//ctx, cancel = context.WithTimeout(context.Background(), time.Second*2)
+	//defer cancel()
+	//
+	//value := url.Values{}
+	//value.Set("access_token", token)
+	//if secret != "" {
+	//	t := time.Now().UnixNano() / 1e6
+	//	value.Set("timestamp", fmt.Sprintf("%d", t))
+	//	value.Set("sign", getSign())
+	//
+	//}
+	//uri = path + value.Encode()
+	//header := map[string]string{
+	//	"Content-type": "application/json",
+	//}
+	//marshal, err := json.Marshal(msg)
+	//if err != nil {
+	//	fmt.Println("序列化数据失败")
+	//	return err
+	//}
+	//resp, err = doRequest(ctx, "POST", uri, header, marshal)
+	//
+	//if err != nil {
+	//	return err
+	//}
+	//if resp.StatusCode != http.StatusOK {
+	//	body, _ := ioutil.ReadAll(resp.Body)
+	//	return fmt.Errorf("send msg err: %s, token: %s, msg: %s", string(body), token, marshal)
+	//}
+	//return nil
 }

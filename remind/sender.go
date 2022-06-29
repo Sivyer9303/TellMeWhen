@@ -51,10 +51,27 @@ func sendMsg(msg SenderMsg) {
 	switch name {
 	case common.DingTalkText:
 		fmt.Println("start dingtalk message")
-
 		break
+	case common.Bible:
+		fmt.Println("start send bible message")
+		formatBibleMessage(way)
 	default:
 		break
 	}
 	fmt.Println("start sendMsg,msg:", msg)
+}
+
+// https://stock.finance.sina.com.cn/fundInfo/api/openapi.php/CaihuiFundInfoService.getNav?symbol=004685&datefrom=2022-06-20&dateto=2022-06-28&page=1
+func formatBibleMessage(way model.ReminderWay) string {
+	//t := way.LastReminderTime
+	//ctx := context.Background()
+	//callMethod := "GET"
+	//baseUrl := "https://stock.finance.sina.com.cn/fundInfo/api/openapi.php/CaihuiFundInfoService.getNav?symbol=004685"
+	//endPoint := "https://stock.finance.sina.com.cn/fundInfo/api/openapi.php/CaihuiFundInfoService.getNav?symbol=004685&datefrom=2022-06-20&dateto=2022-06-28&page=1"
+	//header := make(map[string]string)
+	//header["Cookie"] = "STOCK7-FINANCE-SINA-COM-CN="
+	//body := []byte{}
+	//response, err := common.doRequest(ctx, callMethod, endPoint, header, body)
+	return ""
+
 }

@@ -5,7 +5,6 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
-	"tellMeWhen/common"
 	"tellMeWhen/model"
 	"testing"
 	"time"
@@ -34,25 +33,25 @@ func TestSender_Send_Reminder_Per(t *testing.T) {
 }
 
 func TestSender_Send_Reminder_Cron(t *testing.T) {
-	sender := &Sender{
-		sendChan:  make(chan SenderMsg, 10),
-		reminders: make([]ReminderInterface, 0),
-	}
-	now := time.Now()
-	startTime := now
-	endTime := now.Add(time.Second * 60)
-	way := model.ReminderWay{
-		Name: common.DingTalkText,
-		Desc: "描述cron",
-	}
-	reminder := model.Reminder{
-		ReminderWay:     way,
-		CircleStartTime: startTime,
-		CircleEndTime:   endTime,
-	}
-	per := NewReminderCron(reminder, "0 30 14 * * 2,3,4,5,6 ?")
-	sender.AddReminder(per)
-	time.Sleep(time.Second * 70)
+	//sender := &Sender{
+	//	sendChan:  make(chan SenderMsg, 10),
+	//	reminders: make([]ReminderInterface, 0),
+	//}
+	//now := time.Now()
+	//startTime := now
+	//endTime := now.Add(time.Second * 60)
+	//way := model.ReminderWay{
+	//	Name: common.DingTalkText,
+	//	Desc: "描述cron",
+	//}
+	//reminder := model.Reminder{
+	//	//ReminderWay:     way,
+	//	CircleStartTime: startTime,
+	//	CircleEndTime:   endTime,
+	//}
+	//per := NewReminderCron(reminder, "0 30 14 * * 2,3,4,5,6 ?")
+	//sender.AddReminder(per)
+	//time.Sleep(time.Second * 70)
 }
 
 func TestSign(t *testing.T) {

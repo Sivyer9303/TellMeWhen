@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"tellMeWhen/common"
 	"tellMeWhen/model"
+	"tellMeWhen/query"
 	"time"
 )
 
@@ -45,9 +46,10 @@ func (rp *ReminderPer) start(sendChan chan<- SenderMsg) {
 		case <-tick:
 			// 到了该触发的时候了，组装数据
 			fmt.Println("开始发送消息")
+			way := query.GetRemindQuery().GetReminderWayById(rp.reminder.ReminderWayId)
 			msg := SenderMsg{
 				id:  rp.reminder.ID,
-				way: rp.reminder.ReminderWay,
+				way: *way,
 			}
 			sendChan <- msg
 		}

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"tellMeWhen/common"
 	"tellMeWhen/model"
+	"tellMeWhen/query"
 	"time"
 )
 
@@ -26,7 +27,8 @@ func (re *ReminderExactly) start(sendChan chan<- SenderMsg) {
 	if after {
 		timeChan := time.After(t.Sub(now))
 		<-timeChan
-		msg := SenderMsg{id: 1111, way: re.reminder.ReminderWay}
+		way := query.GetRemindQuery().GetReminderWayById(re.reminder.ReminderWayId)
+		msg := SenderMsg{id: 1111, way: *way}
 		sendChan <- msg
 	} else {
 		fmt.Println("the time is before now,can not start")

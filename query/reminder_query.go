@@ -27,7 +27,6 @@ var once sync.Once
 var RQ *ReminderQuery
 
 func initReminderQuery() {
-	fmt.Println("开始初始化reminder")
 	once.Do(func() {
 		rq := &ReminderQuery{
 			state: STATE_INITIALING,
@@ -60,23 +59,23 @@ func (rq *ReminderQuery) GetAllReminder() []*model.Reminder {
 		return nil
 	}
 	fmt.Println("查询所有提醒结果为:", res)
-	for i := range res {
-		v := res[i]
-		// 关联查询
-		v.ReminderType = *rq.getReminderTypeById(v.ReminderTypeId)
-		v.ReminderWay = *rq.getReminderWayById(v.ReminderWayId)
-		fmt.Println(v)
-	}
+	//for i := range res {
+	//	v := res[i]
+	//	// 关联查询
+	//	//v.ReminderType = *rq.getReminderTypeById(v.ReminderTypeId)
+	//	//v.ReminderWay = *rq.getReminderWayById(v.ReminderWayId)
+	//	fmt.Println(v)
+	//}
 	return res
 }
 
-func (rq *ReminderQuery) getReminderTypeById(i int) *model.ReminderType {
-	t := &model.ReminderType{}
-	rq.db.Model(t).Find(t, "id = ?", i)
-	return t
-}
+//func (rq *ReminderQuery) GetReminderTypeById(i int) *model.ReminderType {
+//	t := &model.ReminderType{}
+//	rq.db.Model(t).Find(t, "id = ?", i)
+//	return t
+//}
 
-func (rq *ReminderQuery) getReminderWayById(i int) *model.ReminderWay {
+func (rq *ReminderQuery) GetReminderWayById(i int) *model.ReminderWay {
 	t := &model.ReminderWay{}
 	rq.db.Model(t).Find(t, "id = ?", i)
 	return t
