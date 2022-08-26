@@ -9,7 +9,7 @@ on:
 jobs:
 
   build:
-    runs-on: iZwz90o2a8lpw3gha7yxvlZ
+    runs-on: self-hosted
     steps:
     - uses: actions/checkout@v3
 
