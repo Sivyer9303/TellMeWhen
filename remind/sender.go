@@ -39,6 +39,7 @@ func (s *Sender) Send() {
 	}
 }
 
+// 测试
 // 钉钉 https://oapi.dingtalk.com/robot/send?access_token=a3e76af9d2e3e79423822fa2c742b89405db57481123582105407000e63af7e6
 func sendMsg(msg SenderMsg) {
 	defer func() {
